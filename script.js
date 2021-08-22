@@ -46,6 +46,89 @@ window.addEventListener("DOMContentLoaded", function() {
 
 
     }
-
     countTimer("22 august 2021");
+
+    //это менюшка
+
+    const toggleMenu = () =>{
+        const btnMenu = document.querySelector(".menu"),
+            menu = document.querySelector('menu'),
+            closeBtn = document.querySelector(".close-btn"),
+            menuItems = menu.querySelectorAll("ul>li"),
+            actionMenu = () => {
+                menu.classList.toggle('active-menu');
+            };
+        
+        btnMenu.addEventListener('click', ()=>{
+            actionMenu();
+        });
+
+        closeBtn.addEventListener("click", () => {
+            actionMenu();
+        });
+
+        menuItems.forEach((item)=>{
+            item.addEventListener("click", () => {
+                actionMenu();
+            })
+        })
+    };
+
+    toggleMenu();
+
+    // popup
+    const testDeviceWidth = () =>{
+        if(document.defaultView.innerWidth > 768){
+            return true
+        } else{
+            return false;
+        }
+    }
+    console.log(testDeviceWidth());
+    const togglePopUp = () =>{
+        const popup = document.querySelector(".popup"),
+            popupClose = document.querySelector(".popup-close"),
+            popupBtn = document.querySelectorAll('.popup-btn');
+        
+        popupClose.addEventListener("click", () =>{
+            if (testDeviceWidth()){
+                let counter = 1;
+                const anim = setInterval(()=>{
+                if (counter < 0 ){
+                    clearInterval(anim);
+                    popup.style.display = "none";
+                    } else if (counter <= 1){
+                        requestAnimationFrame(() => {popup.style.opacity = counter})
+                        counter -= 0.01;
+                    }
+                }, 10)
+            } else {
+                popup.style.display = "none";
+            }
+            
+        })
+
+        popupBtn.forEach((item)=>{
+            item.addEventListener("click", () => {
+                if (testDeviceWidth()){
+                    let counter = 0;
+                    popup.style.display = "block"; 
+                    popup.style.opacity = "0";
+                    const anim = setInterval(()=>{
+                    if (counter > 1){
+                        clearInterval(anim);
+                    } else if (counter <= 1){
+                        requestAnimationFrame(() => {popup.style.opacity = counter})
+                    counter += 0.01;
+                    }
+                }, 1) 
+                } else {
+                    popup.style.display = "block";
+                }
+
+            })
+        })
+
+    };
+    togglePopUp();
 })
