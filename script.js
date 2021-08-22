@@ -84,7 +84,7 @@ window.addEventListener("DOMContentLoaded", function() {
             return false;
         }
     }
-    console.log(testDeviceWidth());
+
     const togglePopUp = () =>{
         const popup = document.querySelector(".popup"),
             popupClose = document.querySelector(".popup-close"),
@@ -131,4 +131,29 @@ window.addEventListener("DOMContentLoaded", function() {
 
     };
     togglePopUp();
+
+    const smoothScroll = () =>{
+        const linkElements = document.querySelectorAll('a');
+        linkElements.forEach(item=>{
+            item.addEventListener('click', (element)=>{
+                element.preventDefault();
+                document.documentElement.scrollTo(0, 0);
+                let counter = 0;
+                const itemId = item.attributes.href.nodeValue,
+                    itemById = document.querySelector(`${itemId}`).offsetTop;
+                console.log(itemById);
+                 const animate = setInterval(() => {
+                     if (counter < itemById/30) {
+                         counter = (counter + 1);
+                         console.log(counter);
+                         requestAnimationFrame(()=>{document.documentElement.scrollTo(0, counter*30);});
+                     } else {
+                        clearInterval(animate); 
+                     }  
+                 }, 1);
+                element.preventDefault();
+            })
+        })
+    };
+    smoothScroll();
 })
