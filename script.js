@@ -141,11 +141,9 @@ window.addEventListener("DOMContentLoaded", function() {
                 let counter = 0;
                 const itemId = item.attributes.href.nodeValue,
                     itemById = document.querySelector(`${itemId}`).offsetTop;
-                console.log(itemById);
                  const animate = setInterval(() => {
                      if (counter < itemById/30) {
                          counter = (counter + 1);
-                         console.log(counter);
                          requestAnimationFrame(()=>{document.documentElement.scrollTo(0, counter*30);});
                      } else {
                         clearInterval(animate); 
