@@ -54,7 +54,7 @@ window.addEventListener("DOMContentLoaded", function() {
         const btnMenu = document.querySelector(".menu"),
             menu = document.querySelector('menu'),
             closeBtn = document.querySelector(".close-btn"),
-            menuItems = menu.querySelectorAll("ul>li"),
+            menuItems = menu.querySelectorAll("ul>li>a"),
             actionMenu = () => {
                 menu.classList.toggle('active-menu');
             };
@@ -71,6 +71,19 @@ window.addEventListener("DOMContentLoaded", function() {
             item.addEventListener("click", () => {
                 actionMenu();
             })
+            item.addEventListener("click", (element) => {
+                element.preventDefault();
+                const itemId = item.attributes.href.nodeValue,
+                itemById = document.querySelector(`${itemId}`).offsetTop;
+                document.documentElement.scrollTo(0, itemById);
+            })
+        })
+
+        document.querySelector("a").addEventListener("click", (element) => {
+            element.preventDefault();
+            const itemId = document.querySelector("a").attributes.href.nodeValue,
+            itemById = document.querySelector(`${itemId}`).offsetTop;
+            document.documentElement.scrollTo(0, itemById);
         })
     };
 
