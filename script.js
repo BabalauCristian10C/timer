@@ -46,7 +46,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
 
     }
-    countTimer("22 august 2021");
+    countTimer("24 august 2021");
 
     //это менюшка
 
@@ -63,7 +63,8 @@ window.addEventListener("DOMContentLoaded", function() {
             actionMenu();
         });
 
-        closeBtn.addEventListener("click", () => {
+        closeBtn.addEventListener("click", (element) => {
+            element.preventDefault();
             actionMenu();
         });
 
@@ -97,7 +98,7 @@ window.addEventListener("DOMContentLoaded", function() {
             return false;
         }
     }
-    console.log(testDeviceWidth());
+
     const togglePopUp = () =>{
         const popup = document.querySelector(".popup"),
             popupClose = document.querySelector(".popup-close"),
