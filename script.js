@@ -97,8 +97,7 @@ window.addEventListener("DOMContentLoaded", function() {
             popupBtn = document.querySelectorAll('.popup-btn');
         
         popupClose.addEventListener("click", () => {
-
-
+            
             if (testDeviceWidth()){
                 let counter = 1;
                 const anim = setInterval(()=>{
@@ -107,19 +106,19 @@ window.addEventListener("DOMContentLoaded", function() {
                     popup.style.display = "none";
                     } else if (counter <= 1){
                         requestAnimationFrame(() => {popup.style.opacity = counter})
-                        counter -= 0.01;
+                        counter -= 0.1;
                     }
-                }, 10)
+                }, 1)
             } else {
                 popup.style.display = "none";
             }
-
         })
 
         popup.addEventListener('click', (event) =>{
             let target = event.target;
-            
+
             if (!target.closest('.popup-content')){
+
                 if (testDeviceWidth()){
                     let counter = 1;
                     const anim = setInterval(()=>{
@@ -128,14 +127,15 @@ window.addEventListener("DOMContentLoaded", function() {
                         popup.style.display = "none";
                         } else if (counter <= 1){
                             requestAnimationFrame(() => {popup.style.opacity = counter})
-                            counter -= 0.01;
+                            counter -= 0.1;
                         }
-                    }, 10)
+                    }, 1)
                 } else {
                     popup.style.display = "none";
-                }
+                }   
             }
         })
+
         popupBtn.forEach((item)=>{
             item.addEventListener("click", () => {
                 if (testDeviceWidth()){
@@ -147,13 +147,12 @@ window.addEventListener("DOMContentLoaded", function() {
                         clearInterval(anim);
                     } else if (counter <= 1){
                         requestAnimationFrame(() => {popup.style.opacity = counter})
-                    counter += 0.01;
+                    counter += 0.1;
                     }
                 }, 1) 
                 } else {
                     popup.style.display = "block";
                 }
-
             })
         })
 
@@ -161,9 +160,10 @@ window.addEventListener("DOMContentLoaded", function() {
     togglePopUp();
     // плавный переход
     const smoothScroll = () =>{
-        const linkElements = document.querySelectorAll('a:not(.close-btn)');
+        const linkElements = document.querySelectorAll('a');
         linkElements.forEach(item=>{
-            item.addEventListener('click', (element)=>{
+            if (!item.classList.contains("close-btn")){
+                item.addEventListener('click', (element)=>{
                 element.preventDefault();
                 document.documentElement.scrollTo(0, 0);
                 let counter = 0;
@@ -179,6 +179,12 @@ window.addEventListener("DOMContentLoaded", function() {
                  }, 1);
                 element.preventDefault();
             })
+            } else {
+                item.addEventListener('click', (e)=>{
+                    e.preventDefault();
+                })
+            }
+
         })
     };
     smoothScroll();
