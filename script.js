@@ -222,9 +222,20 @@ window.addEventListener("DOMContentLoaded", function() {
     const slider = () => {
         const slide = document.querySelectorAll(".portfolio-item"),
             btn = document.querySelectorAll('.portfolio-btn'),
-            dot = document.querySelectorAll('.dot'),
-            slider = document.querySelector('.portfolio-content');
-        
+            slider = document.querySelector('.portfolio-content'),
+            dotBox = document.querySelector('.portfolio-dots'),
+            dotText = document.createElement('li');
+        dotText.classList.add("dot");
+        for (let i = 0; i < slide.length; i++){
+            const dotCopy = dotText.cloneNode()
+            if(i === 0){
+                dotCopy.classList.add("dot-active")
+                dotBox.append(dotCopy);  
+            }else {
+                dotBox.append(dotCopy);  
+              }
+        }
+        const dot = document.querySelectorAll('.dot')
         let currentSlide = 0,
             interval;
 
@@ -288,15 +299,14 @@ window.addEventListener("DOMContentLoaded", function() {
             event.target.matches('.dot')){
                 stopSlide();
             }
-        }
-        )
+        })
+
         slider.addEventListener('mouseout', (event)=>{
             if (event.target.matches('.portfolio-btn') ||
             event.target.matches('.dot')){
                 startSlide();
             }
-        }
-        )
+        })
 
         startSlide(2000);
 
