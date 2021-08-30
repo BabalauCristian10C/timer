@@ -377,6 +377,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 
             })
         }
+        
         const checkEmail = (event) =>{
             const target = event.target;
             target.value = target.value.replace(/[^A-z!@._-~*']/gi, "")
