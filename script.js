@@ -338,17 +338,79 @@ window.addEventListener("DOMContentLoaded", function() {
         })
     };
     ourteam()
+// проверка на ввод
 
-    const calculator = ()=>{
-        const inputs = document.querySelectorAll(".calc-item");
+    const calculator = (price = 100)=>{
+        const inputs = document.querySelectorAll(".calc-item"),
+            calcBlock = document.querySelector(".calc-block"),
+            calcType = document.querySelector(".calc-type"),
+            calcSquare = document.querySelector(".calc-square"),
+            calcDay = document.querySelector(".calc-day"),
+            calcCount = document.querySelector(".calc-count"),
+            totalValue = document.getElementById("total");
+        
+
+        const adder = (insert) =>{
+            
+            const funcM = function(){
+                let indCount=0,
+                    tV = totalValue.textContent
+                    duration = insert/1000;
+                let increment = 1,
+                    step = Math.abs(Math.floor(duration*insert)),
+                    incrementer = setInterval(()=>{
+                        indCount+=increment;
+                        tV = indCount
+                        if(indCount === insert){
+                            clearInterval(incrementer);
+                        }
+                    }, step)
+            }
+            funcM()
+        }
+
+        
+
+        const countSum = () =>{
+            let total = 0,
+                countValue = 1,
+                dayValue = 1,
+                
+                typeValue = +calcType.options[calcType.selectedIndex].value,
+                squareValue = +calcSquare.value;
+            totalValue.textContent = 0;
+            if (calcCount.value > 1){
+                countValue += calcCount.value/10
+            }
+            if (typeValue && squareValue){
+                total = price * typeValue * squareValue * countValue;
+                adder(total)
+            } else{
+                total = 0;
+            }
+
+            
+        }
+        
         inputs.forEach(item =>{
             item.addEventListener("input", (e) =>{
                 const target = e.target;
                 target.value = target.value.replace(/[^0-9]/, "")
             })
+            
         })
+
+        calcBlock.addEventListener('change', (event) => {
+            const target = event.target;
+            if(target.matches('.calc-type') ||target.matches('.calc-square') 
+            ||target.matches('.calc-day') ||target.matches('.calc-count')){
+                countSum();
+            }
+        })
+        
     };
-    calculator();
+
+    calculator(100);
 
     const contact = () =>{
         const name = document.querySelector("#form2-name"),
@@ -377,10 +439,10 @@ window.addEventListener("DOMContentLoaded", function() {
                 
             })
         }
-        
+
         const checkEmail = (event) =>{
             const target = event.target;
-            target.value = target.value.replace(/[^A-z!@._-~*']/gi, "")
+            target.value = target.value.replace(/[^A-z!@._-~*'0-9]/gi, "")
             target.value = target.value.replace(/\s/g, "")
             target.value = target.value.trim();
             target.value = target.value.replace(/-{2,10000}/g, "-")
@@ -394,9 +456,12 @@ window.addEventListener("DOMContentLoaded", function() {
         }
 
         name.addEventListener('blur', checkCyrName);
+        document.querySelector(".form-name").addEventListener('blur', checkCyrName);
         message.addEventListener('blur', checkCyr);
         email.addEventListener("blur",checkEmail);
+        document.querySelector(".form-email").addEventListener('blur', checkEmail);
         number.addEventListener("blur", checkNumber);
+        document.querySelector(".form-phone").addEventListener('blur', checkNumber);
     }
     contact();
 })
