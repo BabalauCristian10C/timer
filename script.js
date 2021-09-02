@@ -477,14 +477,14 @@ window.addEventListener("DOMContentLoaded", function() {
             successMessage = "Thank you!";
         const form = document.getElementById("form1");
 
-        const statusMessage = document.createElement("div");
-        statusMessage.style.cssText = "font-size: 2em";
+        const statusMessage1 = document.createElement("div");
+        statusMessage1.style.cssText = "font-size:2em;"
+        statusMessage1.classList.add("sk-rotating-plane");
 
         form.addEventListener('submit', (e) => {
     
             e.preventDefault();
-            form.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
+            form.appendChild(statusMessage1);
             const formData = new FormData(form);
             let body = {};
             for (let v of formData.entries()){
@@ -492,17 +492,18 @@ window.addEventListener("DOMContentLoaded", function() {
             }
 
             postData(body, ()=>{
-                statusMessage.textContent = successMessage;
+                statusMessage1.classList.remove("sk-rotating-plane");
+                statusMessage1.textContent = successMessage;
             }, (error)=>{
                 console.error(error);
-                statusMessage.textContent = errorMessage;
+                statusMessage1.classList.remove("sk-rotating-plane");
+                statusMessage1.textContent = errorMessage;
             })
         })
 
         const postData = (body, callback, cber) =>{
             const req = new XMLHttpRequest();
             req.addEventListener('readystatechange', ()=>{
-                statusMessage.textContent = loadMessage;
                 if (req.readyState !== 4){
                     return;
                 }
@@ -520,38 +521,38 @@ window.addEventListener("DOMContentLoaded", function() {
         }
         
     };
-    sendForm1()
+    sendForm1();
+
     const sendForm2 = () => {
         const errorMessage="Something went wrong",
-            loadMessage = "Loading...",
             successMessage = "Thank you!";
         const form =document.getElementById("form2");
 
-        const statusMessage = document.createElement("div");
-        statusMessage.style.cssText = "font-size: 2em";
+        const statusMessage1 = document.createElement("div");
+        statusMessage1.style.cssText = "font-size:2em;"
+        statusMessage1.classList.add("sk-rotating-plane");
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            form.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
+            form.appendChild(statusMessage1);
             const formData = new FormData(form);
             let body = {};
             for (let v of formData.entries()){
                 body[v[0]] = v[1]
             }
-
             postData(body, ()=>{
-                statusMessage.textContent = successMessage;
+                statusMessage1.classList.remove("sk-rotating-plane");
+                statusMessage1.textContent = successMessage;
             }, (error)=>{
                 console.error(error);
-                statusMessage.textContent = errorMessage;
+                statusMessage1.classList.remove("sk-rotating-plane");
+                statusMessage1.textContent = errorMessage;
             })
         })
 
         const postData = (body, callback, cber) =>{
             const req = new XMLHttpRequest();
             req.addEventListener('readystatechange', ()=>{
-                statusMessage.textContent = loadMessage;
                 if (req.readyState !== 4){
                     return;
                 }
