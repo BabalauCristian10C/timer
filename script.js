@@ -431,7 +431,6 @@ window.addEventListener("DOMContentLoaded", function() {
             target.value = target.value.trim();
             target.value = target.value.replace(/([а-я])?[А-Яа-яЁё]*/g, (match,v) => {
                 if(v){
-                    console.log(typeof match)
                     return v.toUpperCase() + match.substr(1);
                 } else {
                     return match;
@@ -450,7 +449,7 @@ window.addEventListener("DOMContentLoaded", function() {
         }
         const checkNumber = (event) =>{
             const target = event.target;
-            target.value = target.value.replace(/[^0-9()-]/gi,"")
+            target.value = target.value.replace(/[^0-9()-+]/gi,"")
             target.value = target.value.replace(/(\-){2,10000}/g, "-")
             target.value = target.value.trim();
         }
@@ -464,4 +463,111 @@ window.addEventListener("DOMContentLoaded", function() {
         document.querySelector(".form-phone").addEventListener('blur', checkNumber);
     }
     contact();
+    const clearInput = (item)=>{
+        const inputs = item.querySelectorAll('input');
+        inputs.forEach((item)=>{
+            item.value =""
+        })
+    }
+    //contact send
+
+    const sendForm1 = () => {
+        const errorMessage="Something went wrong",
+            loadMessage = "Loading...",
+            successMessage = "Thank you!";
+        const form = document.getElementById("form1");
+
+        const statusMessage = document.createElement("div");
+        statusMessage.style.cssText = "font-size: 2em";
+
+        form.addEventListener('submit', (e) => {
+    
+            e.preventDefault();
+            form.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+            const formData = new FormData(form);
+            let body = {};
+            for (let v of formData.entries()){
+                body[v[0]] = v[1]
+            }
+
+            postData(body, ()=>{
+                statusMessage.textContent = successMessage;
+            }, (error)=>{
+                console.error(error);
+                statusMessage.textContent = errorMessage;
+            })
+        })
+
+        const postData = (body, callback, cber) =>{
+            const req = new XMLHttpRequest();
+            req.addEventListener('readystatechange', ()=>{
+                statusMessage.textContent = loadMessage;
+                if (req.readyState !== 4){
+                    return;
+                }
+                if(req.status === 200){
+                    callback();
+                } else {
+                    cber(req.status);
+                }
+                clearInput(form);
+            });
+
+            req.open('POST', 'server.php');
+            req.setRequestHeader("Content-Type", 'application/json');
+            req.send(JSON.stringify(body));
+        }
+        
+    };
+    sendForm1()
+    const sendForm2 = () => {
+        const errorMessage="Something went wrong",
+            loadMessage = "Loading...",
+            successMessage = "Thank you!";
+        const form =document.getElementById("form2");
+
+        const statusMessage = document.createElement("div");
+        statusMessage.style.cssText = "font-size: 2em";
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            form.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+            const formData = new FormData(form);
+            let body = {};
+            for (let v of formData.entries()){
+                body[v[0]] = v[1]
+            }
+
+            postData(body, ()=>{
+                statusMessage.textContent = successMessage;
+            }, (error)=>{
+                console.error(error);
+                statusMessage.textContent = errorMessage;
+            })
+        })
+
+        const postData = (body, callback, cber) =>{
+            const req = new XMLHttpRequest();
+            req.addEventListener('readystatechange', ()=>{
+                statusMessage.textContent = loadMessage;
+                if (req.readyState !== 4){
+                    return;
+                }
+                if(req.status === 200){
+                    callback();
+                } else {
+                    cber(req.status);
+                }
+                clearInput(form);
+            });
+
+            req.open('POST', 'server.php');
+            req.setRequestHeader("Content-Type", 'application/json');
+            req.send(JSON.stringify(body));
+        }
+        
+    };
+    sendForm2();
 })
