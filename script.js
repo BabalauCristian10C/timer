@@ -473,13 +473,11 @@ window.addEventListener("DOMContentLoaded", function() {
 
     const sendForm1 = () => {
         const errorMessage="Something went wrong",
-            loadMessage = "Loading...",
             successMessage = "Thank you!";
         const form = document.getElementById("form1");
 
         const statusMessage1 = document.createElement("div");
         statusMessage1.style.cssText = "font-size:2em;"
-        statusMessage1.classList.add("sk-rotating-plane");
 
         form.addEventListener('submit', (e) => {
     
@@ -492,17 +490,16 @@ window.addEventListener("DOMContentLoaded", function() {
             }
 
             postData(body, ()=>{
-                statusMessage1.classList.remove("sk-rotating-plane");
                 statusMessage1.textContent = successMessage;
             }, (error)=>{
                 console.error(error);
-                statusMessage1.classList.remove("sk-rotating-plane");
                 statusMessage1.textContent = errorMessage;
             })
         })
 
         const postData = (body, callback, cber) =>{
             const req = new XMLHttpRequest();
+            statusMessage1.textContent = 'Loading...'
             req.addEventListener('readystatechange', ()=>{
                 if (req.readyState !== 4){
                     return;
@@ -529,8 +526,7 @@ window.addEventListener("DOMContentLoaded", function() {
         const form =document.getElementById("form2");
 
         const statusMessage1 = document.createElement("div");
-        statusMessage1.style.cssText = "font-size:2em;"
-        statusMessage1.classList.add("sk-rotating-plane");
+        statusMessage1.style.cssText = "font-size:2em; "
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -541,17 +537,16 @@ window.addEventListener("DOMContentLoaded", function() {
                 body[v[0]] = v[1]
             }
             postData(body, ()=>{
-                statusMessage1.classList.remove("sk-rotating-plane");
                 statusMessage1.textContent = successMessage;
             }, (error)=>{
                 console.error(error);
-                statusMessage1.classList.remove("sk-rotating-plane");
                 statusMessage1.textContent = errorMessage;
             })
         })
 
         const postData = (body, callback, cber) =>{
             const req = new XMLHttpRequest();
+            statusMessage1.textContent = 'Loading...'
             req.addEventListener('readystatechange', ()=>{
                 if (req.readyState !== 4){
                     return;
