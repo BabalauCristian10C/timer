@@ -466,54 +466,48 @@ window.addEventListener("DOMContentLoaded", function() {
 
     //cleaner
 
-    const clearInput = (item)=>{
+    const clearInput = (item) =>{
         const inputs = item.querySelectorAll('input');
         inputs.forEach((item)=>{
             item.value =""
         })
     }
     //contact send
-
+    const sendServer = (data) =>{
+        return fetch('server.php', {
+            method:"POST",
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify(data)
+        });    
+    }
     const sendForm = (elem) => {
-        return new Promise((resolve, reject)=>{
+        const form = document.getElementById(elem);
+        const statusMessage = document.createElement("div");
+        statusMessage.style.cssText = "font-size:2em;";
 
-            const form = document.getElementById(elem);
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            form.appendChild(statusMessage);
+            statusMessage.textContent = 'Loading...';                const formData = new FormData(form);
+            let body = {};
+            for (let v of formData.entries()){
+                body[v[0]] = v[1]
+            }
+            sendServer(body).then((response)=>{
+                if (response.status !== 200){
+                    throw new Error("Couldn't send any data")
+                }
+                clearInput(form)
+                statusMessage.textContent = "Completed";
+                setTimeout(()=>{
+                    statusMessage.remove()
+                },1000);
+            });   
+        })
+    }
 
-            const statusMessage = document.createElement("div");
-            statusMessage.style.cssText = "font-size:2em;";
-
-            form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    form.appendChild(statusMessage);
-
-                    const formData = new FormData(form);
-                    let body = {};
-                    for (let v of formData.entries()){
-                        body[v[0]] = v[1]
-                    }
-
-                    const req = new XMLHttpRequest();
-                    
-                    req.addEventListener('readystatechange', ()=>{
-                        statusMessage.textContent = 'Loading...';
-                        if (req.readyState !== 4){
-                            return;
-                        }
-                        if(req.status === 200 && req.readyState === 4){
-                            resolve(statusMessage);
-                        } else {
-                            reject("Something went wrong");
-                        }
-                        clearInput(form);
-                    });
-                    req.open('POST', 'server.php');
-                    req.setRequestHeader("Content-Type", 'application/json');
-                    req.send(JSON.stringify(body));    
-                })
-            })
-        }
     const setter = (field) =>{
-        field.textContent = "Completed"
+        field.textContent = "Completed";
         setTimeout(()=>{
             field.remove()
         },1000)
@@ -521,7 +515,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
     //const req1 = sendForm("form1"),
     //      req2 = sendForm("form2");
-   
-    sendForm("form1").then(setter).catch(error => console.error(error))
-    sendForm("form2").then(setter).catch(error => console.error(error))
+    
+    sendForm("form1")
+    sendForm("form2")
 })
