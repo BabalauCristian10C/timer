@@ -463,6 +463,9 @@ window.addEventListener("DOMContentLoaded", function() {
         document.querySelector(".form-phone").addEventListener('blur', checkNumber);
     }
     contact();
+
+    //cleaner
+
     const clearInput = (item)=>{
         const inputs = item.querySelectorAll('input');
         inputs.forEach((item)=>{
@@ -471,99 +474,54 @@ window.addEventListener("DOMContentLoaded", function() {
     }
     //contact send
 
-    const sendForm1 = () => {
-        const errorMessage="Something went wrong",
-            successMessage = "Thank you!";
-        const form = document.getElementById("form1");
+    const sendForm = (elem) => {
+        return new Promise((resolve, reject)=>{
 
-        const statusMessage1 = document.createElement("div");
-        statusMessage1.style.cssText = "font-size:2em;"
+            const form = document.getElementById(elem);
 
-        form.addEventListener('submit', (e) => {
-    
-            e.preventDefault();
-            form.appendChild(statusMessage1);
-            const formData = new FormData(form);
-            let body = {};
-            for (let v of formData.entries()){
-                body[v[0]] = v[1]
-            }
+            const statusMessage = document.createElement("div");
+            statusMessage.style.cssText = "font-size:2em;";
 
-            postData(body, ()=>{
-                statusMessage1.textContent = successMessage;
-            }, (error)=>{
-                console.error(error);
-                statusMessage1.textContent = errorMessage;
+            form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    form.appendChild(statusMessage);
+
+                    const formData = new FormData(form);
+                    let body = {};
+                    for (let v of formData.entries()){
+                        body[v[0]] = v[1]
+                    }
+
+                    const req = new XMLHttpRequest();
+                    
+                    req.addEventListener('readystatechange', ()=>{
+                        statusMessage.textContent = 'Loading...';
+                        if (req.readyState !== 4){
+                            return;
+                        }
+                        if(req.status === 200 && req.readyState === 4){
+                            resolve(statusMessage);
+                        } else {
+                            reject("Something went wrong");
+                        }
+                        clearInput(form);
+                    });
+                    req.open('POST', 'server.php');
+                    req.setRequestHeader("Content-Type", 'application/json');
+                    req.send(JSON.stringify(body));    
+                })
             })
-        })
-
-        const postData = (body, callback, cber) =>{
-            const req = new XMLHttpRequest();
-            statusMessage1.textContent = 'Loading...'
-            req.addEventListener('readystatechange', ()=>{
-                if (req.readyState !== 4){
-                    return;
-                }
-                if(req.status === 200){
-                    callback();
-                } else {
-                    cber(req.status);
-                }
-                clearInput(form);
-            });
-
-            req.open('POST', 'server.php');
-            req.setRequestHeader("Content-Type", 'application/json');
-            req.send(JSON.stringify(body));
         }
-        
-    };
-    sendForm1();
+    const setter = (field) =>{
+        field.textContent = "Completed"
+        setTimeout(()=>{
+            field.remove()
+        },1000)
+    } 
 
-    const sendForm2 = () => {
-        const errorMessage="Something went wrong",
-            successMessage = "Thank you!";
-        const form =document.getElementById("form2");
-
-        const statusMessage1 = document.createElement("div");
-        statusMessage1.style.cssText = "font-size:2em; "
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            form.appendChild(statusMessage1);
-            const formData = new FormData(form);
-            let body = {};
-            for (let v of formData.entries()){
-                body[v[0]] = v[1]
-            }
-            postData(body, ()=>{
-                statusMessage1.textContent = successMessage;
-            }, (error)=>{
-                console.error(error);
-                statusMessage1.textContent = errorMessage;
-            })
-        })
-
-        const postData = (body, callback, cber) =>{
-            const req = new XMLHttpRequest();
-            statusMessage1.textContent = 'Loading...'
-            req.addEventListener('readystatechange', ()=>{
-                if (req.readyState !== 4){
-                    return;
-                }
-                if(req.status === 200){
-                    callback();
-                } else {
-                    cber(req.status);
-                }
-                clearInput(form);
-            });
-
-            req.open('POST', 'server.php');
-            req.setRequestHeader("Content-Type", 'application/json');
-            req.send(JSON.stringify(body));
-        }
-        
-    };
-    sendForm2();
+    //const req1 = sendForm("form1"),
+    //      req2 = sendForm("form2");
+   
+    sendForm("form1").then(setter).catch(error => console.error(error))
+    sendForm("form2").then(setter).catch(error => console.error(error))
 })
