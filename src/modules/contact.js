@@ -42,7 +42,6 @@ const contact = () =>{
         target.value = target.value.replace(/[^0-9()-+]/gi,"")
         target.value = target.value.replace(/(\-){2,10000}/g, "-")
         target.value = target.value.trim();
-        console.log(target.value.length)
         if (target.value.length>12){
             target.value = ""
         } else {
