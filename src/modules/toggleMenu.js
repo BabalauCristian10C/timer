@@ -14,11 +14,16 @@ const toggleMenu = () =>{
                 }
             }
     
+    closeBtn.addEventListener("click", (e)=>{
+        e.preventDefault();
+        actionMenu();
+    }) 
+
     document.addEventListener("click", e =>{
         const target = e.target;
-        if (target.closest(".menu") ||target.matches(".close-btn") || target.closest("ul>li>a")){
+        if ((target.closest(".menu") ||target.matches(".close-btn") || target.closest("ul>li>a")) && target !== closeBtn){
             actionMenu();
-        } else if (test() && !(target.closest("menu"))){
+        } else if (test() && !(target.closest("menu") && target !==closeBtn)){
             actionMenu();
         }       
     })

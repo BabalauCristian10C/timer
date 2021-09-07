@@ -10,6 +10,7 @@ const contact = () =>{
         target.value = target.value.replace(/\s{2,10000}/g, " ")
         target.value = target.value.trim();
     }
+    
     const checkCyrName = (event) =>{
         const target = event.target;
         target.value = target.value.replace(/[^А-Яа-яЁё\s]/gi, "")
@@ -27,17 +28,30 @@ const contact = () =>{
 
     const checkEmail = (event) =>{
         const target = event.target;
-        target.value = target.value.replace(/[^A-z!@._-~*'0-9]/gi, "")
-        target.value = target.value.replace(/\s/g, "")
-        target.value = target.value.trim();
-        target.value = target.value.replace(/-{2,10000}/g, "-")
-
+        if(target.value.match(/[A-z!._-~*'0-9]+@[A-z.]+/gi)){
+            target.value = target.value.replace(/\s/g, "")
+            target.value = target.value.trim();
+            target.value = target.value.replace(/-{2,10000}/g, "-")    
+        } else {
+            target.value =""
+        }
     }
+
     const checkNumber = (event) =>{
         const target = event.target;
         target.value = target.value.replace(/[^0-9()-+]/gi,"")
         target.value = target.value.replace(/(\-){2,10000}/g, "-")
         target.value = target.value.trim();
+        console.log(target.value.length)
+        if (target.value.length>12){
+            target.value = ""
+        } else {
+            if((target.value.length === 12 && target.value[0] === "+")||(target.value.length === 11 && target.value[0] !== "+")){
+                return;
+            } else {
+                target.value = "" 
+            }
+        }
     }
 
     name.addEventListener('blur', checkCyrName);

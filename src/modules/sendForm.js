@@ -30,16 +30,22 @@
             for (let v of formData.entries()) {
                 body[v[0]] = v[1]
             }
-            sendServer(body).then((response) => {
-                if (response.status !== 200) {
-                    throw new Error("Couldn't send any data")
-                }
-                clearInput(form)
-                statusMessage.textContent = "Completed";
-                setTimeout(() => {
-                    statusMessage.remove()
-                }, 1000);
-            }).catch(error => {console.log(error)});
+                sendServer(body).then((response) => {
+                    if (response.status !== 200 || form.querySelector(`[name="user_name"]`).value.length <2) {
+                        throw new Error("Couldn't send any data")
+                    }
+                    clearInput(form)
+                    statusMessage.textContent = "Completed";
+                    setTimeout(() => {
+                        statusMessage.remove()
+                    }, 1000);
+                }).catch(error => {
+                    statusMessage.textContent = "Name is too short";
+                    clearInput(form);
+                    setTimeout(() => {
+                        statusMessage.remove()
+                    }, 1000);
+                });
         })
     }
 

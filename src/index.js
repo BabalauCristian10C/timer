@@ -1,31 +1,37 @@
 
-   import countTimer from './modules/countTimer'  
-   import toggleMenu from './modules/toggleMenu' 
-   import togglePopUp from './modules/togglePopUp' 
-   import tabs from './modules/tabs' 
-   import slider from './modules/slider' 
-   import ourteam from './modules/ourteam' 
-   import calculator from './modules/calculator'
-   import contact from './modules/contact' 
-   import sendForm from './modules/sendForm'  
+    import countTimer from './modules/countTimer'  
+    import toggleMenu from './modules/toggleMenu' 
+    import togglePopUp from './modules/togglePopUp' 
+    import tabs from './modules/tabs' 
+    import slider from './modules/slider' 
+    import ourteam from './modules/ourteam' 
+    import calculator from './modules/calculator'
+    import contact from './modules/contact' 
+    import sendForm from './modules/sendForm'  
+    import smoothScroll from './modules/smoothScroll'
 
-    
-    countTimer("21 august 2021");
+    window.addEventListener("DOMContentLoaded", ()=>{
+        countTimer("21 september 2021");
 
-    toggleMenu();
+        toggleMenu();
 
-    togglePopUp();
+        togglePopUp();
 
-    tabs();
+        smoothScroll();
+        
+        tabs();
 
-    slider();
+        slider();
 
-    ourteam();
+        ourteam();
 
-    calculator(100);
+        calculator(100);
 
-    contact();
+        contact();
 
-    sendForm("form1")
-    sendForm("form2")
-    sendForm("form3")
+        sendForm("form1");
+        sendForm("form2");
+        sendForm("form3");  
+    })
+        
+

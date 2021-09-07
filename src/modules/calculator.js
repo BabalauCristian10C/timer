@@ -8,24 +8,6 @@ const calculator = (price = 100)=>{
         totalValue = document.getElementById("total");
     
 
-    // const adder = (insert) =>{
-    //     const funcM = function(){
-    //         let indCount=0,
-    //             tV = totalValue.textContent
-    //             duration = insert/1000;
-    //         let increment = 1,
-    //             step = Math.abs(Math.floor(duration*insert)),
-    //             incrementer = setInterval(()=>{
-    //                 indCount+=increment;
-    //                 tV = indCount
-    //                 if(indCount === insert){
-    //                     clearInterval(incrementer);
-    //                 }
-    //             }, step)
-    //     }
-    //     funcM()
-    // }
-
     const countSum = () =>{
         let total = 0,
             countValue = 1,
@@ -55,13 +37,20 @@ const calculator = (price = 100)=>{
             const target = e.target;
             target.value = target.value.replace(/[^0-9]/, "")
         })
-        
     })
+    const clearForm = () =>{
+        inputs.forEach(item =>{
+            item.value = ""
+        })  
+    }
 
     calcBlock.addEventListener('change', (event) => {
         const target = event.target;
         if(target.matches('.calc-type') ||target.matches('.calc-square') 
         ||target.matches('.calc-day') ||target.matches('.calc-count')){
+            if(!calcType.value) {
+                clearForm()
+            }
             countSum();
         }
     })
