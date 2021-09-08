@@ -27,13 +27,13 @@ const contact = () =>{
         })
 
         if(target.value){
-            if(target.value.length <=2){
+            if(target.value.length <2){
                 if(!target.classList.contains("unactive"))     
                 {
                     target.classList.add("unactive");
                 }    
             }
-            else if (target.value.length > 2){
+            else if (target.value.length > 1){
                 if(target.classList.contains("unactive")) 
                 {
                     target.classList.remove("unactive")   
@@ -58,7 +58,6 @@ const contact = () =>{
             }
             return
         }
-        
     }
 
     const checkNumber = (event) =>{
