@@ -48,10 +48,12 @@ const calculator = (price = 100)=>{
         const target = event.target;
         if(target.matches('.calc-type') ||target.matches('.calc-square') 
         ||target.matches('.calc-day') ||target.matches('.calc-count')){
-            if(!calcType.value) {
-                clearForm()
-            }
             countSum();
+        }
+    })
+    calcType.addEventListener("change", ()=>{
+        if(!calcType.value) {
+            clearForm()
         }
     })
     

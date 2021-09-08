@@ -18,12 +18,29 @@ const contact = () =>{
         target.value = target.value.trim();
         target.value = target.value.replace(/([а-я])?[А-Яа-яЁё]*/g, (match,v) => {
             if(v){
-                return v.toUpperCase() + match.substr(1);
-            } else {
-                return match;
+                match = v.toUpperCase() + match.substr(1);    
+            }   
+            else{
+                match = match;
             }
-            
+            return match;
         })
+
+        if(target.value){
+            if(target.value.length <=2){
+                if(!target.classList.contains("unactive"))     
+                {
+                    target.classList.add("unactive");
+                }    
+            }
+            else if (target.value.length > 2){
+                if(target.classList.contains("unactive")) 
+                {
+                    target.classList.remove("unactive")   
+                }  
+            }
+        }
+        
     }
 
     const checkEmail = (event) =>{
@@ -31,10 +48,17 @@ const contact = () =>{
         if(target.value.match(/[A-z!._-~*'0-9]+@[A-z.]+/gi)){
             target.value = target.value.replace(/\s/g, "")
             target.value = target.value.trim();
-            target.value = target.value.replace(/-{2,10000}/g, "-")    
+            target.value = target.value.replace(/-{2,10000}/g, "-")
+            if(target.classList.contains("unactive")) {
+                target.classList.remove("unactive")   
+            }
         } else {
-            target.value =""
+            if(!target.classList.contains("unactive"))            {
+                target.classList.add("unactive");
+            }
+            return
         }
+        
     }
 
     const checkNumber = (event) =>{
@@ -46,9 +70,15 @@ const contact = () =>{
             target.value = ""
         } else {
             if((target.value.length === 12 && target.value[0] === "+")||(target.value.length === 11 && target.value[0] !== "+")){
+                if(target.classList.contains("unactive")) {
+                    target.classList.remove("unactive")
+                }
                 return;
             } else {
-                target.value = "" 
+                if(!target.classList.contains("unactive")){
+                    target.classList.add("unactive")   
+                }       
+                return;
             }
         }
     }
@@ -61,5 +91,4 @@ const contact = () =>{
     number.addEventListener("blur", checkNumber);
     document.querySelector(".form-phone").addEventListener('blur', checkNumber);
 }
-
 export default contact;

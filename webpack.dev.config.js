@@ -8,14 +8,6 @@ module.exports = {
         path: path.resolve(__dirname, "./dist")
     },
     mode: "development",
-    devServer: {
-        open:true,
-        static: {
-            directory: path.join(__dirname, './dev-bundle.js'),
-        },
-        port:3343,
-        hot: true
-    },
     module: {
         rules: [
             {

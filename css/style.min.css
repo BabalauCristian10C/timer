@@ -1180,3 +1180,7 @@ footer .web {
         left: 5px
     }
 }
+
+.unactive {
+    border: 2px solid red !important;
+}

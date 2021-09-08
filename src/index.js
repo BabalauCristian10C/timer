@@ -11,7 +11,7 @@
     import smoothScroll from './modules/smoothScroll'
 
     window.addEventListener("DOMContentLoaded", ()=>{
-        countTimer("21 september 2021");
+        countTimer("12 september 2021");
 
         toggleMenu();
 

@@ -1,5 +1,5 @@
 {
-  "name": "timermain",
+  "name": "timer",
   "version": "1.0.0",
   "description": "Main Timer",
   "dependencies": {
@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "webpack --config webpack.prod.config.js",
-    "dev": "webpack serve --config webpack.dev.config",
+    "dev": "webpack --config webpack.dev.config",
     "watch": "webpack --watch --config webpack.prod.config.js"
   },
   "repository": {
