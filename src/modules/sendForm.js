@@ -19,7 +19,7 @@
 
         const form = document.getElementById(elem);
         const statusMessage = document.createElement("div");
-        statusMessage.style.cssText = "font-size:2em; color";
+        statusMessage.style.cssText = "font-size:2em; color:white;";
 
         form.addEventListener('submit', (e) => {
             let val = true;

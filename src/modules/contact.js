@@ -89,12 +89,14 @@ const contact = () =>{
     }
 
     name.addEventListener('blur', checkCyrName);
+    name1.addEventListener('blur', checkCyrName);
     document.querySelector("#form3-name").addEventListener('blur', checkCyrName);
     message.addEventListener('blur', checkCyr);
     email.addEventListener("blur",checkEmail);
+    email1.addEventListener("blur",checkEmail);
     document.querySelector("#form3-email").addEventListener('blur', checkEmail);
     number.addEventListener("blur", checkNumber);
+    number1.addEventListener("blur", checkNumber);
     document.querySelector("#form3-phone").addEventListener('blur', checkNumber);
-    console.log(document.querySelector("#form3-phone"))
 }
 export default contact;
