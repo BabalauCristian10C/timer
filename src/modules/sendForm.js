@@ -19,9 +19,10 @@
 
         const form = document.getElementById(elem);
         const statusMessage = document.createElement("div");
-        statusMessage.style.cssText = "font-size:2em;";
+        statusMessage.style.cssText = "font-size:2em; color";
 
         form.addEventListener('submit', (e) => {
+            let val = true;
             e.preventDefault();
             form.appendChild(statusMessage);
             statusMessage.textContent = 'Loading...';
@@ -30,16 +31,19 @@
             for (let v of formData.entries()) {
                 body[v[0]] = v[1]
             }
+
+            form.querySelectorAll("input").forEach((i)=>{
+                if (i.classList.contains("unactive")){
+                    val = false;
+                }
+            })
+            
+            if(val){
                 sendServer(body).then((response) => {
                     if (response.status !== 200) {
                         throw new Error("Couldn't send any data")
                     }
-                    form.querySelectorAll("input").forEach((i)=>{
-                        if (i.classList.contains("unactive")){
-                            throw new Error("Some of the data is invalid")
-                        }
-                    })
-                    clearInput(form)
+                    clearInput(form);
                     statusMessage.textContent = "Completed";
                     setTimeout(() => {
                         statusMessage.remove()
@@ -56,6 +60,10 @@
                         statusMessage.remove()
                     }, 2000);
                 });
+            } else {
+                statusMessage.textContent = "Some data is incorect";
+            }
+
         })
     }
 

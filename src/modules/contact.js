@@ -1,8 +1,14 @@
 const contact = () =>{
-    const name = document.querySelector("#form2-name"),
+    const name = document.querySelector("#form1-name"),
         message = document.querySelector("#form2-message"),
-        email = document.querySelector("#form2-email"),
-        number = document.querySelector("#form2-phone");
+        email = document.querySelector("#form1-email"),
+        number = document.querySelector("#form1-phone"),
+        name1 = document.querySelector("#form2-name"),
+        email1 = document.querySelector("#form2-email"),
+        number1 = document.querySelector("#form2-phone"),
+        name2 = document.querySelector("#form3-name"),
+        email2 = document.querySelector("#form3-email"),
+        number2 = document.querySelector("#form3-phone");
 
     const checkCyr = (event) =>{
         const target = event.target;
@@ -83,11 +89,12 @@ const contact = () =>{
     }
 
     name.addEventListener('blur', checkCyrName);
-    document.querySelector(".form-name").addEventListener('blur', checkCyrName);
+    document.querySelector("#form3-name").addEventListener('blur', checkCyrName);
     message.addEventListener('blur', checkCyr);
     email.addEventListener("blur",checkEmail);
-    document.querySelector(".form-email").addEventListener('blur', checkEmail);
+    document.querySelector("#form3-email").addEventListener('blur', checkEmail);
     number.addEventListener("blur", checkNumber);
-    document.querySelector(".form-phone").addEventListener('blur', checkNumber);
+    document.querySelector("#form3-phone").addEventListener('blur', checkNumber);
+    console.log(document.querySelector("#form3-phone"))
 }
 export default contact;
