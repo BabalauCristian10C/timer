@@ -25,8 +25,7 @@ const contact = () =>{
         target.value = target.value.replace(/([а-я])?[А-Яа-яЁё]*/g, (match,v) => {
             if(v){
                 match = v.toUpperCase() + match.substr(1);    
-            }   
-            else{
+            }else{
                 match = match;
             }
             return match;
@@ -68,25 +67,28 @@ const contact = () =>{
 
     const checkNumber = (event) =>{
         const target = event.target;
+        let counter = 0;
         target.value = target.value.replace(/[^0-9()-+]/gi,"")
         target.value = target.value.replace(/(\-){2,10000}/g, "-")
         target.value = target.value.trim();
-        if (target.value.length>12){
-            target.value = ""
-        } else {
-            if((target.value.length === 12 && target.value[0] === "+")||(target.value.length === 11 && target.value[0] !== "+")){
+
+        for (let v of target.value){
+            if(v.match(/[0-9]/i)){
+                counter++;
+            }
+        }
+        console.log(counter)
+        if(counter===11){
                 if(target.classList.contains("unactive")) {
                     target.classList.remove("unactive")
                 }
-                return;
-            } else {
-                if(!target.classList.contains("unactive")){
-                    target.classList.add("unactive")   
-                }       
-                return;
-            }
+        }else{
+            if(!target.classList.contains("unactive")){
+                target.classList.add("unactive")   
+            }       
         }
     }
+    
 
     name.addEventListener('blur', checkCyrName);
     name1.addEventListener('blur', checkCyrName);
